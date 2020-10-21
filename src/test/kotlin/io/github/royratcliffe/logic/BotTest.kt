@@ -1,6 +1,5 @@
 package io.github.royratcliffe.logic
 
-import io.github.royratcliffe.logic.impl.BotImpl
 import java.time.Duration
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -11,7 +10,7 @@ import kotlin.test.assertTrue
 class BotTest {
     @Test
     fun `Open and close`() {
-        val logicBot = BotImpl()
+        val logicBot = Bot.Factory.newInstance()
         assertFalse(logicBot.isClosed())
         logicBot.assertZ("a", 1)
         logicBot.assertZ("a", 2)
