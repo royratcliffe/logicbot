@@ -23,6 +23,12 @@ class BotTest {
         assertEquals(mapOf("Hello" to "hello").toString(), substitutions[2].toString())
         logicBot.close()
         assertTrue(logicBot.isClosed())
+        // Sleep for one second before asserting closure once more. This gives
+        // time for the bot to finish closing and helps test coverage. Without
+        // the delay, the test quits before the bot implementation's actor scope
+        // returns.
+        Thread.sleep(1000)
+        assertTrue(logicBot.isClosed())
     }
 
     @Test
