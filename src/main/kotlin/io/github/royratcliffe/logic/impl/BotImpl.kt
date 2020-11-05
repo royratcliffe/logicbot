@@ -14,6 +14,7 @@ import kotlinx.coroutines.runBlocking
 import java.time.Duration
 
 @kotlinx.coroutines.ObsoleteCoroutinesApi
+@kotlinx.coroutines.ExperimentalCoroutinesApi
 class BotImpl : Bot {
     private val sendChannel = prolog {
         GlobalScope.actor<Op> {

@@ -11,6 +11,7 @@ interface Bot {
     fun close(): Boolean
 
     companion object Factory {
+        @kotlinx.coroutines.ObsoleteCoroutinesApi
         fun newInstance() = BotImpl()
     }
 }
