@@ -25,11 +25,11 @@ class BotImpl : Bot {
                         val goal = with(TermParser.withDefaultOperators) {
                             parseStruct(op.input)
                         }
-                        val solutions = solve(goal, op.maxDuration)
+                        val yeses = solve(goal, op.maxDuration)
                             .filterIsInstance<Solution.Yes>()
                             .map { YesImpl(it) }
                             .toList()
-                        op.solutions.complete(solutions)
+                        op.yeses.complete(yeses)
                     }
                     is Op.LoadStaticKb -> with(ClausesParser.withDefaultOperators) {
                         loadStaticKb(parseTheory(op.input))
@@ -42,7 +42,7 @@ class BotImpl : Bot {
     }
 
     sealed class Op {
-        class Solve(val input: String, val maxDuration: Long, val solutions: CompletableDeferred<List<Yes>>) : Op()
+        class Solve(val input: String, val maxDuration: Long, val yeses: CompletableDeferred<List<Yes>>) : Op()
         class LoadStaticKb(val input: String) : Op()
         class AssertZ(val functor: String, vararg val args: Any) : Op()
         class RetractAll(val functor: String, vararg val args: Any) : Op()
