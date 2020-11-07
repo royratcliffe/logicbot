@@ -21,10 +21,10 @@ class BotImpl : Bot {
             consumeEach { op ->
                 when (op) {
                     is Op.Solve -> {
-                        val struct = with(TermParser.withDefaultOperators) {
+                        val goal = with(TermParser.withDefaultOperators) {
                             parseStruct(op.input)
                         }
-                        val solutions = solve(struct, op.maxDuration)
+                        val solutions = solve(goal, op.maxDuration)
                             .filterIsInstance<Solution.Yes>()
                             .map { YesImpl(it) }
                             .toList()
