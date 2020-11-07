@@ -34,12 +34,15 @@ class BotTest {
     @Test
     fun `Retract dynamic knowledge`() {
         val logicBot = Bot.Factory.newInstance()
+        assertEquals(0, logicBot.solve("a(X)", Duration.ofSeconds(1)).size)
         logicBot.assertZ("a", 1)
+        assertEquals(1, logicBot.solve("a(X)", Duration.ofSeconds(1)).size)
         logicBot.assertZ("a", 2)
+        assertEquals(2, logicBot.solve("a(X)", Duration.ofSeconds(1)).size)
         logicBot.assertZ("a", "hello")
+        assertEquals(3, logicBot.solve("a(X)", Duration.ofSeconds(1)).size)
         logicBot.retractAll("a", "_")
-        val substitutions = logicBot.solve("a(Hello)", Duration.ofSeconds(1)).map { it.substitutionsAsMap() }
-        assertEquals(0, substitutions.size)
+        assertEquals(0, logicBot.solve("a(X)", Duration.ofSeconds(1)).size)
         logicBot.close()
     }
 }

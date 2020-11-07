@@ -5,6 +5,7 @@ import java.time.Duration
 
 interface Bot {
     fun solve(input: String, maxDuration: Duration): List<Yes>
+    fun loadStaticKb(input: String)
     fun assertZ(functor: String, vararg args: Any)
     fun retractAll(functor: String, vararg args: Any)
     fun isClosed(): Boolean
