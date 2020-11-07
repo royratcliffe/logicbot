@@ -5,6 +5,7 @@ import io.github.royratcliffe.logic.Yes
 import it.unibo.tuprolog.core.parsing.TermParser
 import it.unibo.tuprolog.dsl.solve.prolog
 import it.unibo.tuprolog.solve.Solution
+import it.unibo.tuprolog.theory.parsing.ClausesParser
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.channels.actor
@@ -30,7 +31,7 @@ class BotImpl : Bot {
                             .toList()
                         op.solutions.complete(solutions)
                     }
-                    is Op.LoadStaticKb -> with(clausesParserWithOperators(operators)) {
+                    is Op.LoadStaticKb -> with(ClausesParser.withDefaultOperators) {
                         loadStaticKb(parseTheory(op.input))
                     }
                     is Op.AssertZ -> assertZ(structOf(op.functor, *op.args.map { it.toTerm() }.toTypedArray()))
