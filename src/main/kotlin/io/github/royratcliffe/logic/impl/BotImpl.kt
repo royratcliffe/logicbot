@@ -23,7 +23,7 @@ class BotImpl : Bot {
                 when (op) {
                     is Op.Solve -> {
                         val goal = with(TermParser.withDefaultOperators) {
-                            parseStruct(op.input)
+                            parseStruct(op.goal)
                         }
                         val yeses = solve(goal, op.maxDuration)
                             .filterIsInstance<Solution.Yes>()
@@ -42,16 +42,16 @@ class BotImpl : Bot {
     }
 
     sealed class Op {
-        class Solve(val input: String, val maxDuration: Long, val yeses: CompletableDeferred<List<Yes>>) : Op()
+        class Solve(val goal: String, val maxDuration: Long, val yeses: CompletableDeferred<List<Yes>>) : Op()
         class LoadStaticKb(val input: String) : Op()
         class AssertZ(val functor: String, vararg val args: Any) : Op()
         class RetractAll(val functor: String, vararg val args: Any) : Op()
     }
 
-    override fun solve(input: String, maxDuration: Duration): List<Yes> = runBlocking {
-        val solutions = CompletableDeferred<List<Yes>>()
-        sendChannel.sendBlocking(Op.Solve(input, maxDuration.toMillis(), solutions))
-        solutions.await()
+    override fun solve(goal: String, maxDuration: Duration): List<Yes> = runBlocking {
+        val yeses = CompletableDeferred<List<Yes>>()
+        sendChannel.sendBlocking(Op.Solve(goal, maxDuration.toMillis(), yeses))
+        yeses.await()
     }
 
     override fun loadStaticKb(input: String) = sendChannel.sendBlocking(Op.LoadStaticKb(input))
