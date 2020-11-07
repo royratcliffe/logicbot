@@ -34,7 +34,7 @@ class BotTest {
     }
 
     @Test
-    fun `Retract dynamic knowledge`() {
+    fun `Assert and retract dynamic knowledge`() {
         val bot = Bot.Factory.newInstance()
         assertEquals(0, bot.solve("a(X)", Duration.ofSeconds(1)).size)
         bot.assertZ("a", 1)
