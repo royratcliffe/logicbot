@@ -32,7 +32,7 @@ class BotImpl : Bot {
                         op.yeses.complete(yeses)
                     }
                     is Op.LoadStaticKb -> with(ClausesParser.withDefaultOperators) {
-                        loadStaticKb(parseTheory(op.input))
+                        loadStaticKb(parseTheory(op.theory))
                     }
                     is Op.AssertZ -> assertZ(structOf(op.functor, *op.args.map { it.toTerm() }.toTypedArray()))
                     is Op.RetractAll -> retractAll(structOf(op.functor, *op.args.map { it.toTerm() }.toTypedArray()))
@@ -43,7 +43,7 @@ class BotImpl : Bot {
 
     sealed class Op {
         class Solve(val goal: String, val maxDuration: Long, val yeses: CompletableDeferred<List<Yes>>) : Op()
-        class LoadStaticKb(val input: String) : Op()
+        class LoadStaticKb(val theory: String) : Op()
         class AssertZ(val functor: String, vararg val args: Any) : Op()
         class RetractAll(val functor: String, vararg val args: Any) : Op()
     }
@@ -54,7 +54,7 @@ class BotImpl : Bot {
         yeses.await()
     }
 
-    override fun loadStaticKb(input: String) = sendChannel.sendBlocking(Op.LoadStaticKb(input))
+    override fun loadStaticKb(theory: String) = sendChannel.sendBlocking(Op.LoadStaticKb(theory))
 
     override fun assertZ(functor: String, vararg args: Any) = sendChannel.sendBlocking(Op.AssertZ(functor, *args))
 
