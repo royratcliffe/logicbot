@@ -1,5 +1,6 @@
 package io.github.royratcliffe.logic.impl
 
+import io.github.royratcliffe.logic.toAny
 import it.unibo.tuprolog.core.parsing.TermParser
 import kotlin.test.Test
 import kotlin.test.assertEquals
