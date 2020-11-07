@@ -10,6 +10,7 @@ internal class YesImplKtTest {
     fun toAny() {
         assertTermEquals(1, "1")
         assertTermEquals(1L shl 32, "4294967296")
+        assertTermEquals(1e100, "1.0e+100")
         assertTermEquals("atom", "atom")
         assertTermEquals("string", """"string"""")
     }
