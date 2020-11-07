@@ -21,7 +21,9 @@ class BotImpl : Bot {
             consumeEach { op ->
                 when (op) {
                     is Op.Solve -> {
-                        val struct = with(TermParser.withDefaultOperators) { parseStruct(op.input) }
+                        val struct = with(TermParser.withDefaultOperators) {
+                            parseStruct(op.input)
+                        }
                         val solutions = solve(struct, op.maxDuration)
                             .filterIsInstance<Solution.Yes>()
                             .map { YesImpl(it) }
