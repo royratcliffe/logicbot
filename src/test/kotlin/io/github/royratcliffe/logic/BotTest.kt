@@ -16,7 +16,9 @@ class BotTest {
         logicBot.assertZ("a", 1)
         logicBot.assertZ("a", 2)
         logicBot.assertZ("a", "hello")
-        val substitutions = logicBot.solve("a(Hello)", Duration.ofSeconds(1)).map { it.substitutionsAsMap() }
+        val substitutions = logicBot.solve("a(Hello)", Duration.ofSeconds(1)).map {
+            it.substitutionsAsMap()
+        }
         assertEquals(3, substitutions.size)
         assertEquals(mapOf("Hello" to 1).toString(), substitutions[0].toString())
         assertEquals(mapOf("Hello" to 2).toString(), substitutions[1].toString())
