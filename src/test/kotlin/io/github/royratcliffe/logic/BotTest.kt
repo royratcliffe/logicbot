@@ -7,6 +7,7 @@ import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 @kotlinx.coroutines.ObsoleteCoroutinesApi
+@kotlinx.coroutines.ExperimentalCoroutinesApi
 class BotTest {
     @Test
     fun `Open and close`() {
@@ -22,5 +23,23 @@ class BotTest {
         assertEquals(mapOf("Hello" to "hello").toString(), substitutions[2].toString())
         logicBot.close()
         assertTrue(logicBot.isClosed())
+        // Sleep for one second before asserting closure once more. This gives
+        // time for the bot to finish closing and helps test coverage. Without
+        // the delay, the test quits before the bot implementation's actor scope
+        // returns.
+        Thread.sleep(1000)
+        assertTrue(logicBot.isClosed())
+    }
+
+    @Test
+    fun `Retract dynamic knowledge`() {
+        val logicBot = Bot.Factory.newInstance()
+        logicBot.assertZ("a", 1)
+        logicBot.assertZ("a", 2)
+        logicBot.assertZ("a", "hello")
+        logicBot.retractAll("a", "_")
+        val substitutions = logicBot.solve("a(Hello)", Duration.ofSeconds(1)).map { it.substitutionsAsMap() }
+        assertEquals(0, substitutions.size)
+        logicBot.close()
     }
 }

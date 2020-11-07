@@ -13,7 +13,7 @@ dependencies {
     implementation(kotlin("stdlib"))
     testImplementation(kotlin("test-junit"))
 
-    implementation("org.jetbrains.kotlinx", "kotlinx-coroutines-core", "1.3.9")
-    implementation("it.unibo.tuprolog", "dsl-solve-jvm", "0.13.0")
-    implementation("it.unibo.tuprolog", "parser-theory", "0.13.0")
+    implementation("org.jetbrains.kotlinx", "kotlinx-coroutines-core", "latest.release")
+    implementation("it.unibo.tuprolog", "dsl-solve-jvm", "latest.release")
+    implementation("it.unibo.tuprolog", "parser-theory", "latest.release")
 }
