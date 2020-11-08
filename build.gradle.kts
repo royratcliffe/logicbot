@@ -2,7 +2,7 @@ plugins {
     kotlin("jvm") version "1.4.10"
 }
 
-group = "io.github.ratcliffe"
+group = "io.github.royratcliffe"
 version = "0.1.0-SNAPSHOT"
 
 repositories {
